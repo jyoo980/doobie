@@ -53,7 +53,7 @@ object HikariTransactor {
     pass:            String,
     isAutoCommit: Boolean,
     connectEC:       ExecutionContext,
-    blocker:         Blocker,
+    blocker:         Blocker
   ): Resource[M, HikariTransactor[M]] =
     for {
       _ <- Resource.liftF(Async[M].delay(Class.forName(driverClassName)))
