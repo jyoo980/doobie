@@ -30,12 +30,13 @@ class `824` extends Specification {
       ce <- ExecutionContexts.fixedThreadPool[IO](16) // our connect EC
       te <- Resource.liftF(IO.delay(Executors.newCachedThreadPool)) // our transaction EC
       xa <- HikariTransactor.newHikariTransactor[IO](
-              "org.h2.Driver",                        // driver classname
-              "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",   // connect URL
-              "sa",                                   // username
-              "",                                     // password
-              ce,                                     // await connection here
-              Blocker.liftExecutorService(te)         // execute JDBC operations here
+              driverClassName = "org.h2.Driver",
+              url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
+              user = "sa",
+              pass = "",
+              isAutoCommit = false,
+              connectEC = ce,
+              blocker = Blocker.liftExecutorService(te)
             )
     } yield xa
 

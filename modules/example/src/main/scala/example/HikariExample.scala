@@ -19,7 +19,7 @@ object HikariExample extends IOApp {
       xa <- HikariTransactor.newHikariTransactor[IO](
               "org.h2.Driver",
               "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-              "sa", "",
+              "sa", "", isAutoCommit = false,
               ce, blocker
             )
     } yield xa
